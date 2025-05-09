@@ -1,0 +1,19 @@
+FROM docker.io/archlinux:base
+
+RUN set -exu \
+  && pacman -syu \
+  && pacman -sy \
+    git \
+    curl \
+    wget \
+    nano \
+    xfce4 \
+    xfce4-goodies \
+    supervisor \
+    dbus \
+    tigervnc \
+    mesa
+
+    COPY rootfs /
+
+CMD ["/bin/bash", "/entrypoint.sh"]
