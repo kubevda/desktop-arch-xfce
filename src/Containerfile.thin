@@ -9,8 +9,7 @@ RUN set -exu \
     git \
     nano \
     wget \
-    xfce4-goodies \
-    xorg
+    xfce4-goodies
 
 COPY rootfs.thin /
 
