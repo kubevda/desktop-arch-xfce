@@ -3,16 +3,17 @@ FROM docker.io/archlinux:base
 RUN set -exu \
   && pacman -Syyu \
   && pacman -Syy \
-    git \
     curl \
-    wget \
+    dbus \
+    git \
+    mesa \
     nano \
+    supervisor \
+    tigervnc \
+    wget \
     xfce4 \
     xfce4-goodies \
-    supervisor \
-    dbus \
-    tigervnc \
-    mesa
+    xorg
 
 COPY rootfs /
 
