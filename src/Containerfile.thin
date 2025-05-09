@@ -1,0 +1,17 @@
+FROM ghcr.io/kubevda/vdimage-arch-xfce-base:latest
+
+RUN set -exu \
+  && pacman --noconfirm -Syyu \
+  && pacman --noconfirm -Syy \
+    code \
+    curl \
+    firefox \
+    git \
+    nano \
+    wget \
+    xfce4-goodies \
+    xorg
+
+COPY rootfs.thin /
+
+CMD ["/bin/bash", "/entrypoint.sh"]

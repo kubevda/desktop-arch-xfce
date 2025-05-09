@@ -18,7 +18,7 @@ useradd \
 
 usermod \
   -a -G \
-    adm,sudo,video,audio,tty,users,xpra,pulse \
+    adm,sudo,video,audio,tty,users,pulse \
       "${USER}"
 
 passwd -d "${USER}"
@@ -53,17 +53,6 @@ chown -Rv "${USER}":"${GROUP}" "$(dirname ${DISPLAY_SOCK_ADDR})"
 
 echo "Granting ${USER} ownership of ${HOME}"
 chown -Rv "${USER}":"${GROUP}" "${HOME}"
-
-# Allow an automatic shell at the pts. This will trigger systemd-user.
-cat << EOF | tee /etc/pam.d/login
-auth       sufficient   pam_listfile.so item=tty sense=allow file=/etc/securetty onerr=fail apply=${USER}
-auth       required     pam_securetty.so
-auth       requisite    pam_nologin.so
--session   optional     pam_loginuid.so
--session   optional     pam_systemd.so
-EOF
-
-echo pts/1 >> /etc/securetty
 
 mkdir -pv /run/dbus
 

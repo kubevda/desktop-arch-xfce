@@ -3,18 +3,13 @@ FROM docker.io/archlinux:base
 RUN set -exu \
   && pacman --noconfirm -Syyu \
   && pacman --noconfirm -Syy \
-    curl \
     dbus \
-    git \
     mesa \
-    nano \
     supervisor \
     tigervnc \
-    wget \
     xfce4 \
-    xfce4-goodies \
     xorg
 
-COPY rootfs /
+COPY rootfs.base /
 
 CMD ["/bin/bash", "/entrypoint.sh"]

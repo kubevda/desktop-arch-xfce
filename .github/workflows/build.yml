@@ -7,7 +7,7 @@ on:
       - main
 
 env:
-  IMAGE_NAME: ghcr.io/kubevda/vdimage-arch-xfce
+  IMAGE_PREFIX: ghcr.io/kubevda/vdimage-arch-xfce-
   PLATFORMS: linux/amd64
   ARCHS: amd64
   VERSION: latest
@@ -50,8 +50,8 @@ jobs:
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
+      - name: Extract metadata (tags, labels) for Docker - Base
+        id: meta-base
         uses: docker/metadata-action@v5
         with:
           tags: |
@@ -59,18 +59,43 @@ jobs:
             type=ref,event=tag,priority=900
             type=raw,value=${{ github.sha }},priority=800
           images: |
-            ${{ env.IMAGE_NAME }}
+            ${{ env.IMAGE_PREFIX }}base
 
-      - name: Build and push Docker image
-        id: build
+      - name: Build and push Docker image - Base
+        id: build-base
         uses: docker/build-push-action@v6
         with:
           context: src/
           pull: true
-          file: src/Containerfile
+          file: src/Containerfile.base
           platforms: ${{ env.PLATFORMS }}
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=local,src=/home/runner/.${{ env.IMAGE_NAME }}.buildx-cache
-          cache-to: type=local,dest=/home/runner/.${{ env.IMAGE_NAME }}.buildx-cache
+          tags: ${{ steps.meta-base.outputs.tags }}
+          labels: ${{ steps.meta-base.outputs.labels }}
+          cache-from: type=local,src=/home/runner/.${{ env.IMAGE_PREFIX }}base.buildx-cache
+          cache-to: type=local,dest=/home/runner/.${{ env.IMAGE_PREFIX }}base.buildx-cache
+
+      - name: Extract metadata (tags, labels) for Docker - Thin
+        id: meta-thin
+        uses: docker/metadata-action@v5
+        with:
+          tags: |
+            type=raw,value=latest,priority=1000
+            type=ref,event=tag,priority=900
+            type=raw,value=${{ github.sha }},priority=800
+          images: |
+            ${{ env.IMAGE_PREFIX }}thin
+
+      - name: Build and push Docker image - Thin
+        id: build-thin
+        uses: docker/build-push-action@v6
+        with:
+          context: src/
+          pull: true
+          file: src/Containerfile.thin
+          platforms: ${{ env.PLATFORMS }}
+          push: true
+          tags: ${{ steps.meta-thin.outputs.tags }}
+          labels: ${{ steps.meta-thin.outputs.labels }}
+          cache-from: type=local,src=/home/runner/.${{ env.IMAGE_PREFIX }}thin.buildx-cache
+          cache-to: type=local,dest=/home/runner/.${{ env.IMAGE_PREFIX }}thin.buildx-cache
