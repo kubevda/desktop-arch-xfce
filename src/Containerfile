@@ -1,8 +1,8 @@
 FROM docker.io/archlinux:base
 
 RUN set -exu \
-  && pacman -syu \
-  && pacman -sy \
+  && pacman -Syu \
+  && pacman -Sy \
     git \
     curl \
     wget \
@@ -14,6 +14,6 @@ RUN set -exu \
     tigervnc \
     mesa
 
-    COPY rootfs /
+COPY rootfs /
 
 CMD ["/bin/bash", "/entrypoint.sh"]
