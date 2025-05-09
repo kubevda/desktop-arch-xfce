@@ -1,8 +1,8 @@
 FROM docker.io/archlinux:base
 
 RUN set -exu \
-  && pacman -Syu \
-  && pacman -Sy \
+  && pacman -Syyu \
+  && pacman -Syy \
     git \
     curl \
     wget \
