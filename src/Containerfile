@@ -1,8 +1,8 @@
 FROM docker.io/archlinux:base
 
 RUN set -exu \
-  && pacman -Syyu \
-  && pacman -Syy \
+  && pacman --noconfirm -Syyu \
+  && pacman --noconfirm -Syy \
     curl \
     dbus \
     git \
