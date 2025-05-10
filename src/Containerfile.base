@@ -5,6 +5,7 @@ RUN set -exu \
   && pacman --noconfirm -Syy \
     dbus \
     mesa \
+    sudo \
     supervisor \
     tigervnc \
     xfce4 \
