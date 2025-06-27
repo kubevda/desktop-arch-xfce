@@ -10,7 +10,14 @@ RUN set -exu \
     nvidia-utils \
     nvtop \
     opencl-nvidia \
-    egl-x11
+    egl-x11 \
+    code \
+    curl \
+    firefox \
+    git \
+    nano \
+    wget \
+    xfce4-goodies
 
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
