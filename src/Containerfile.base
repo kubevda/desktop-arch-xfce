@@ -9,7 +9,8 @@ RUN set -exu \
     supervisor \
     tigervnc \
     xfce4 \
-    xorg
+    xorg \
+    virtualgl
 
 COPY rootfs.base /
 
