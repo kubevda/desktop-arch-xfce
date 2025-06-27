@@ -17,7 +17,8 @@ RUN set -exu \
     git \
     nano \
     wget \
-    xfce4-goodies
+    xfce4-goodies \
+    nvidia
 
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
