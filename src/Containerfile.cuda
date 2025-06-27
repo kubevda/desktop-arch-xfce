@@ -1,0 +1,18 @@
+FROM ghcr.io/kubevda/vdimage-arch-xfce-base:latest
+
+RUN set -exu \
+  && pacman --noconfirm -Syu \
+  && pacman --noconfirm -Syu \
+    cuda \
+    cuda-tools \
+    python-cuda \
+    libvdpau \
+    nvidia-utils \
+    nvtop \
+    opencl-nvidia \
+    egl-x11
+
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+COPY rootfs.cuda /

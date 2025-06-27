@@ -99,3 +99,28 @@ jobs:
           labels: ${{ steps.meta-thin.outputs.labels }}
           cache-from: type=local,src=/home/runner/.${{ env.IMAGE_PREFIX }}thin.buildx-cache
           cache-to: type=local,dest=/home/runner/.${{ env.IMAGE_PREFIX }}thin.buildx-cache
+
+      - name: Extract metadata (tags, labels) for Docker - Cuda
+        id: meta-cuda
+        uses: docker/metadata-action@v5
+        with:
+          tags: |
+            type=raw,value=latest,priority=1000
+            type=ref,event=tag,priority=900
+            type=raw,value=${{ github.sha }},priority=800
+          images: |
+            ${{ env.IMAGE_PREFIX }}cuda
+
+      - name: Build and push Docker image - Cuda
+        id: build-cuda
+        uses: docker/build-push-action@v6
+        with:
+          context: src/
+          pull: true
+          file: src/Containerfile.cuda
+          platforms: ${{ env.PLATFORMS }}
+          push: true
+          tags: ${{ steps.meta-cuda.outputs.tags }}
+          labels: ${{ steps.meta-cuda.outputs.labels }}
+          cache-from: type=local,src=/home/runner/.${{ env.IMAGE_PREFIX }}cuda.buildx-cache
+          cache-to: type=local,dest=/home/runner/.${{ env.IMAGE_PREFIX }}cuda.buildx-cache
