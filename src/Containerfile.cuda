@@ -18,6 +18,7 @@ RUN set -exu \
     nano \
     wget \
     xfce4-goodies \
+    opencl-nvidia \
     nvidia
 
 ENV NVIDIA_VISIBLE_DEVICES=all
